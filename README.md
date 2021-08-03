@@ -32,14 +32,14 @@ packages (and a few others that might be helpful).
 4. Download spack and configure compilers. 
 The built-in spec for building UQTk with spack doesn't build 
 PyUQTk, so you'll need to use the spec 
-from [the spack-uqtk-PyUQTk-variant branch in padamson's fork of spack on GitHub](https://github.com/padamson/spack/tree/spack-uqtk-PyUQTk-variant). 
-If you have spack installed already, you can just copy the `package.py` file from `spack/var/spack/repos/builtin/packages/uqtk`
-into your copy of spack (make sure you get the version from the spack-uqtk-PyUQTk-variant branch). Or, you can clone padamson's fork of spack and checkout the dev branch:
+from [the spack-uqtk-PyUQTk-variant branch in padamson's fork of spack on GitHub](https://github.com/padamson/spack/blob/32a48d41110914cd827d330bd917c786a85edd67/var/spack/repos/builtin/packages/uqtk/package.py).
+Just copy the above `package.py` file somewhere like `$HOME/tmp/package.py`.
+
 
 ```console
-> git clone git@github.com:padamson/spack.git
+> git clone https://github.com/spack/spack.git
 > cd spack
-> git checkout spack-uqtk-PyUQTk-variant
+> cp $HOME/tmp/package.py var/spack/repos/builtin/packages/uqtk/
 > . share/spack/setup-env.sh # for bash/zsh/sh (see docs if not)
 > spack compiler find # should add gcc@10.x.y to spack
 ```
@@ -71,10 +71,7 @@ compilers
 
 6. Add PyUQTk to the `pyuqtk` conda environment. __Instructions TBD__
 
-7. Load uqtk.
-```console
-> spack load uqtk
-```
+7. `spack load uqtk@3.1.0`
 
-8. Run some examples. __Instructions TBD__
+7. Run some examples located in `opt/spack/linux-distro-arch/gcc-10.x.y/uqtk-3.1.0-*/examples`.
 
