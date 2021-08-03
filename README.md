@@ -26,30 +26,55 @@ packages (and a few others that might be helpful).
 > sudo apt update
 > sudo apt upgrade # if desired, not necessarily required
 > sudo apt install build-essential
-> sudo apt install gcc-10 g++-10
+> sudo apt install gcc-10 g++-10 gfortran-10
 ```
 
-4. Download spack and build UQTk and PyUQTk. 
+4. Download spack and configure compilers. 
 The built-in spec for building UQTk with spack doesn't build 
 PyUQTk, so you'll need to use the spec 
 from [the spack-uqtk-PyUQTk-variant branch in padamson's fork of spack on GitHub](https://github.com/padamson/spack/tree/spack-uqtk-PyUQTk-variant). 
 If you have spack installed already, you can just copy the `package.py` file from `spack/var/spack/repos/builtin/packages/uqtk`
 into your copy of spack (make sure you get the version from the spack-uqtk-PyUQTk-variant branch). Or, you can clone padamson's fork of spack and checkout the dev branch:
+
 ```console
 > git clone git@github.com:padamson/spack.git
 > cd spack
 > git checkout spack-uqtk-PyUQTk-variant
 > . share/spack/setup-env.sh # for bash/zsh/sh (see docs if not)
 > spack compiler find # should add gcc@10.x.y to spack
+```
+
+Update your `$HOME/.spack/linux/compilers.yaml` file to point to `gfortran-10`:
+
+```yaml
+compilers
+- compiler:
+    spec: gcc@10.3.0
+    paths:
+      cc: /usr/bin/gcc-10
+      cxx: /usr/bin/g++-10
+      f77: /usr/bin/gfortran-10
+      fc: /usr/bin/gfortran-10
+    flags: {}
+    operating_system: ubuntu20.04
+    target: x86_64
+    modules: []
+    environment: {}
+    extra_rpaths: []
+```
+
+5. Finally, build and install UQTk and PyUQTk:
+
+```console
 > spack install uqtk pyuqtk=ON %gcc@10.x.y # use x.y from above
 ``` 
 
-5. Add PyUQTk to the `pyuqtk` conda environment. __Instructions TBD__
+6. Add PyUQTk to the `pyuqtk` conda environment. __Instructions TBD__
 
-6. Load uqtk.
+7. Load uqtk.
 ```console
 > spack load uqtk
 ```
 
-6. Run some examples. __Instructions TBD__
+8. Run some examples. __Instructions TBD__
 
