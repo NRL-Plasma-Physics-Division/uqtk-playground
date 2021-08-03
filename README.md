@@ -29,18 +29,13 @@ packages (and a few others that might be helpful).
 > sudo apt install gcc-10 g++-10 gfortran-10
 ```
 
-4. Download spack and configure compilers. 
-The built-in spec for building UQTk with spack doesn't build 
-PyUQTk, so you'll need to use the spec 
-from [the spack-uqtk-PyUQTk-variant branch in padamson's fork of spack on GitHub](https://github.com/padamson/spack/blob/32a48d41110914cd827d330bd917c786a85edd67/var/spack/repos/builtin/packages/uqtk/package.py).
-Just copy the above `package.py` file somewhere like `$HOME/tmp/package.py`.
-
-
+4. Download and install spack and configure compilers. 
 ```console
+> cd $HOME/opt # or wherever you'd like to install spack
 > git clone https://github.com/spack/spack.git
 > cd spack
-> cp $HOME/tmp/package.py var/spack/repos/builtin/packages/uqtk/
 > . share/spack/setup-env.sh # for bash/zsh/sh (see docs if not)
+> # you may want to add the above line to your .bashrc/.zshrc
 > spack compiler find # should add gcc@10.x.y to spack
 ```
 
@@ -63,15 +58,50 @@ compilers
     extra_rpaths: []
 ```
 
-5. Finally, build and install UQTk and PyUQTk:
+5. Add the [spack-ppd repo](https://github.com/NRL-Plasma-Physics-Division/spack-ppd) to spack.
+The built-in spec for building UQTk with spack doesn't build 
+PyUQTk, so you'll need to use the spec 
+from [the spack-ppd repo](https://github.com/NRL-Plasma-Physics-Division/spack-ppd).
+
+```console
+> cd $HOME/opt # or wherever
+> git clone https://github.com/NRL-Plasma-Physics-Division/spack-ppd
+```
+Add `spack-ppd` to your `~/.spack.repos.yaml` file:
+```yaml
+repos:
+  - $HOME/opt/spack-ppd # or wherever you put it
+  - $spack/var/spack/repos/builtin
+```
+
+6. Finally, build and install UQTk and PyUQTk:
 
 ```console
 > spack install uqtk pyuqtk=ON %gcc@10.x.y # use x.y from above
 ``` 
 
-6. Add PyUQTk to the `pyuqtk` conda environment. __Instructions TBD__
+If successful, UQTk and PyUQTk will be built in a folder within spack named `opt/spack/linux-[distro]-[arch]/gcc-10.[x].[y]/uqtk-3.1.0-[hash]`, where:
+- distro: your linux distro, probably ubuntu20.04
+- arch: your hardware architecture, perhaps skylake
+- 10.x.y: the subversion of gcc, probably 10.3.0
+- hash: some unique hash associated with the UQTk build
 
-7. `spack load uqtk@3.1.0`
+7. Add PyUQTk to the `pyuqtk` conda environment. 
+Add the following basic `setup.py` file to the spack `uqtk-3.1.0-[hash]` build directory:
+```console
+from setuptools import setup
 
-7. Run some examples located in `opt/spack/linux-distro-arch/gcc-10.x.y/uqtk-3.1.0-*/examples`.
+setup(
+    name="PyUQTk",
+    version="1.0",
+    packages=["PyUQTk"],
+)
+```
+Now, with the pyuqtk conda environment still activated, 
+run `pip install .` (note the period at the end) inside the spack `uqtk-3.1.0-[hash]` 
+build directory. This command installs the python code in the PyUQTk folder into your active pyuqtk conda environment using `pip`.
+
+8. Load the uqtk spack package that you built with the command `spack load uqtk@3.1.0`.
+
+9. Go through the [UQTk User Guide](https://www.sandia.gov/uqtoolkit/manual/) and run some examples located in `uqtk-3.1.0-[hash]/examples`.
 
