@@ -98,8 +98,9 @@ setup(
 )
 ```
 Now, with the pyuqtk conda environment still activated, 
-run `pip install .` (note the period at the end) inside the spack `uqtk-3.1.0-[hash]` 
-build directory. This command installs the python code in the PyUQTk folder into your active pyuqtk conda environment using `pip`.
+run `pip install -e .` (note the period at the end) inside the spack `uqtk-3.1.0-[hash]` 
+build directory. This command installs the Python code in the PyUQTk folder into your active pyuqtk conda environment using `pip`. The `-e` option
+installs it in "develop" mode with symbolic links, allowing the swig interface to work.
 
 8. Load the uqtk spack package that you built with the command `spack load uqtk@3.1.0`.
 
