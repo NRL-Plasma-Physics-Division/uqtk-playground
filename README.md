@@ -67,7 +67,7 @@ from [the spack-ppd repo](https://github.com/NRL-Plasma-Physics-Division/spack-p
 > cd $HOME/opt # or wherever
 > git clone https://github.com/NRL-Plasma-Physics-Division/spack-ppd
 ```
-Add `spack-ppd` to your `~/.spack.repos.yaml` file:
+Add `spack-ppd` to your `~/.spack/repos.yaml` file:
 ```yaml
 repos:
   - $HOME/opt/spack-ppd # or wherever you put it
