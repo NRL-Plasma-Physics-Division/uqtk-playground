@@ -47,23 +47,7 @@ compilers
     extra_rpaths: []
 ```
 
-3. Add the [spack-ppd repo](https://github.com/NRL-Plasma-Physics-Division/spack-ppd) to spack.
-The built-in spec for building UQTk with spack doesn't build 
-PyUQTk, so you'll need to use the spec 
-from [the spack-ppd repo](https://github.com/NRL-Plasma-Physics-Division/spack-ppd).
-
-```console
-> cd $HOME/opt # or wherever
-> git clone https://github.com/NRL-Plasma-Physics-Division/spack-ppd
-```
-Add `spack-ppd` to your `~/.spack/repos.yaml` file:
-```yaml
-repos:
-  - $HOME/opt/spack-ppd # or wherever you put it
-  - $spack/var/spack/repos/builtin
-```
-
-4. Finally, build and install UQTk and PyUQTk:
+3. Finally, build and install UQTk and PyUQTk:
 
 ```console
 > spack install uqtk pyuqtk=True %gcc@10.x.y # use x.y from above
@@ -77,7 +61,7 @@ If successful, UQTk and PyUQTk will be built in a folder within spack named `opt
 
 Also, you will have a version of python, numpy, scipy, and matplotlib installed within spack that will be loaded alongside UQTk (and PyUQTk) when you do the next step.
 
-5. Load the uqtk spack package with the command `spack load uqtk`. `PyUQTk` that resides in the `uqtk-3.1.0-[hash]` folder in spack will be in your `PYTHONPATH`.
+4. Load the uqtk spack package with the command `spack load uqtk`. `PyUQTk` that resides in the `uqtk-3.1.0-[hash]` folder in spack will be in your `PYTHONPATH`.
 
-6. Go through the [UQTk User Guide](https://www.sandia.gov/uqtoolkit/manual/) and run some examples located in `uqtk-3.1.0-[hash]/examples`.
+5. Go through the [UQTk User Guide](https://www.sandia.gov/uqtoolkit/manual/) and run some examples located in `uqtk-3.1.0-[hash]/examples`. _Note: some of the examples have legacy Python2 and numpy code that will need to be updated._
 
